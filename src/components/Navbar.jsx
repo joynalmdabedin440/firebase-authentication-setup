@@ -1,12 +1,10 @@
-import { useContext } from "react";
+
 import { Link } from "react-router";
-import {AuthContext} from "../providers/AuthProvider"
+
 
 
 const Navbar = () => {
-    const user = useContext(AuthContext)
-    const { name } =user
-   console.log(name,user);
+    
    
 
     return (
@@ -23,9 +21,7 @@ const Navbar = () => {
                     <li>
                         <Link to="/register" className="btn btn-ghost">Register</Link>
                     </li>
-                    <li>
-                        {name ||'name'}
-                    </li>
+                    
                 </ul>
             </div>
         </div>

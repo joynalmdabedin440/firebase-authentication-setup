@@ -1,11 +1,34 @@
+import { useContext, useState } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../providers/AuthProvider";
+
 
 
 const Register = () => {
+    const [error, setError] = useState(null)
+    const [success, setSuccess] = useState(false)
 
-    const handleSubmit = (e) => { 
+    const { createUser } = useContext(AuthContext)
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target.email.value);
+
+        const email = e.target.email.value
+        const password = e.target.password.value
+        setError(null)
+        setSuccess(false)
+        createUser(email, password)
+            .then(() => {
+                setSuccess(true)
+            }
+
+
+            )
+
+            .catch(error => {
+                setError(error.message)
+
+            })
     }
 
 
@@ -14,21 +37,34 @@ const Register = () => {
             <div className="hero-content flex-col ">
                 <div className="text-center lg:text-left">
                     <h1 className="text-3xl font-bold">Register Now!</h1>
-                    
+
                 </div>
                 <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-                    <form onSubmit={handleSubmit}  className="card-body">
-                        <fieldset  className="fieldset">
+                    <form onSubmit={handleSubmit} className="card-body">
+                        <fieldset className="fieldset">
                             <label className="fieldset-label">Name</label>
                             <input type="text" className="input" placeholder="Name" name="name" />
                             <label className="fieldset-label">Email</label>
-                            <input type="email" className="input" placeholder="Email" name="email"/>
+                            <input type="email" className="input" placeholder="Email" name="email" />
                             <label className="fieldset-label">Password</label>
                             <input type="password" className="input" placeholder="Password" name="password" />
                             <div> Already have account?<Link to="/login">Login </Link></div>
                             <button type="submit" className="btn btn-neutral mt-4">Register</button>
                         </fieldset>
                     </form>
+                    <div className="text-center pb-2">
+                        <p className="text-red-500 p-">
+                            {
+                                error ? error : ""
+                            }
+                        </p>
+
+                        <p className="text-green-400">
+                            {
+                                success ? "Successfully Register" : ""
+                            }
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
