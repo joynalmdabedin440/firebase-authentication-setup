@@ -36,6 +36,12 @@ const Navbar = () => {
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1 ">
 
+                    {
+                        user && <li>
+                            <Link to="/orders" className="btn btn-ghost">Orders</Link>
+                        </li>
+                    }
+
 
 
 
