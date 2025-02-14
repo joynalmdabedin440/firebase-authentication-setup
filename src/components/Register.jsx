@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../providers/AuthProvider";
 import { updateProfile } from "firebase/auth";
 import auth from "../firebase.init";
@@ -7,6 +7,8 @@ import auth from "../firebase.init";
 
 
 const Register = () => {
+
+    const navigate = useNavigate()
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(false)
 
@@ -19,6 +21,8 @@ const Register = () => {
         const password = e.target.password.value
         const displayName = e.target.name.value
         console.log(displayName);
+
+        
         
         
         
@@ -27,6 +31,8 @@ const Register = () => {
         createUser(email, password)
             .then(() => {
                 setSuccess(true)
+                e.target.reset()
+                navigate("/orders")
             }
 
 

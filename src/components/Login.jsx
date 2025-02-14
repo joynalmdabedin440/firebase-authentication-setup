@@ -1,8 +1,11 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../providers/AuthProvider";
+import { useNavigate } from "react-router";
 
 
 const Login = () => {
+
+    const navigate = useNavigate()
 
     const [error, setError] = useState('')
 
@@ -23,6 +26,8 @@ const Login = () => {
             .then(() => {
 
                 setSuccess(true)
+                e.target.reset()
+                navigate("/orders")
 
 
             })

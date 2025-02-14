@@ -2,7 +2,7 @@
 
 const Orders = () => {
     return (
-        <div className="flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800">
+        <div className="flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800 mx-auto">
             <h2 className="text-xl font-semibold">Your cart</h2>
             <ul className="flex flex-col divide-y divide-gray-300">
                 <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
