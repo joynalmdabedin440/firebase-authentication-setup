@@ -1,13 +1,13 @@
 import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import auth from "../firebase.init";
 
 
 export const AuthContext = createContext(null)
 
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState(null)
     
     const createUser = (email, password) => {
         
@@ -18,19 +18,23 @@ const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth,email,password)
     }
 
+    const logOutUser = () => {
+        return signOut(auth)
+            
+    }
+
     useEffect(() => {
-        const unsubscribe=onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setUser(user)
-            }
-            else {
-                console.log("no user found");
-                
-            }
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        
+            setUser(currentUser)
+            console.log(currentUser);
+            
+            
+            
         })
 
         return () => {
-            unsubscribe()
+            unsubscribe();
         }
     },[])
 
@@ -38,7 +42,8 @@ const AuthProvider = ({ children }) => {
     const contextApi = {
         createUser,
         loginUser,
-        user
+        user,
+        logOutUser
     }
 
     

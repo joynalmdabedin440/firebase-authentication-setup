@@ -1,11 +1,32 @@
 
+import { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../providers/AuthProvider";
 
 
 
 const Navbar = () => {
-    
-   
+
+    const { user, logOutUser } = useContext(AuthContext)
+
+
+    const handleLogOutUser = () => {
+        logOutUser()
+            .then(() => {
+                console.log('logout success');
+
+            })
+            .catch(error => {
+                console.log(error.message);
+
+            })
+    }
+
+
+
+
+
+
 
     return (
         <div className="navbar bg-base-100 shadow-sm">
@@ -13,15 +34,32 @@ const Navbar = () => {
                 <a className="btn btn-ghost text-xl">Firebase Auth</a>
             </div>
             <div className="flex-none">
-                <ul className="menu menu-horizontal px-1">
-                    
+                <ul className="menu menu-horizontal px-1 ">
+
+
+
+
                     <li>
-                        <Link to="/login" className="btn btn-ghost">Login</Link>
+                        {
+                            user ?
+
+                                <div>
+                                    <p>
+                                        {user.email}
+                                    </p>
+                                    <button onClick={handleLogOutUser} className="btn btn-ghost">Logout</button>
+
+                                </div>
+
+
+
+                                : <div>
+                                    <Link to="/login" className="btn btn-ghost">Login</Link>
+                                    <Link to="/register" className="btn btn-ghost">Register</Link>
+                                </div>
+                        }
                     </li>
-                    <li>
-                        <Link to="/register" className="btn btn-ghost">Register</Link>
-                    </li>
-                    
+
                 </ul>
             </div>
         </div>

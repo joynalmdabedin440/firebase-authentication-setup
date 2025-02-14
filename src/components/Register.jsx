@@ -1,6 +1,8 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../providers/AuthProvider";
+import { updateProfile } from "firebase/auth";
+import auth from "../firebase.init";
 
 
 
@@ -15,6 +17,11 @@ const Register = () => {
 
         const email = e.target.email.value
         const password = e.target.password.value
+        const displayName = e.target.name.value
+        console.log(displayName);
+        
+        
+        
         setError(null)
         setSuccess(false)
         createUser(email, password)
@@ -29,6 +36,19 @@ const Register = () => {
                 setError(error.message)
 
             })
+        
+        
+        updateProfile(auth.currentUser, {
+            displayName
+        })
+            .then((res) => {
+            console.log(res);
+            
+            })
+            .catch(error => {
+            console.log(error.message);
+            
+        })
     }
 
 
